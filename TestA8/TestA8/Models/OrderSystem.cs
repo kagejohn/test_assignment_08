@@ -9,6 +9,13 @@ namespace TestA8.Models
     {
         private static readonly List<Order> Orders = new List<Order>();
 
+        public static bool EnterOrder(Order order)
+        {
+            Orders.Add(order);
+
+            return true;
+        }
+
         public static bool EnterOrder(Pizza pizza, bool paid = false, bool pickedup = false)
         {
             return EnterOrder(pizza, DateTime.Now.AddHours(1), paid, pickedup);
