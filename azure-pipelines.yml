@@ -15,7 +15,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet restore
+- script: dotnet restore '$(solution)'
 
 - task: VSBuild@1
   inputs:
