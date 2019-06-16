@@ -27,6 +27,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
+- script: dir
 - script: dotnet test '**/**/XUnitTestA8/*.csproj' --logger trx
 - task: PublishTestResults@2
   condition: succeededOrFailed()
