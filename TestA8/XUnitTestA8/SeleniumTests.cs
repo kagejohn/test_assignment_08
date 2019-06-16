@@ -27,7 +27,9 @@ namespace XUnitTestA8
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
 
-            var element = _driver.FindElement(By.Id("Pizza"));
+            _wait = new WebDriverWait(_driver, new TimeSpan(0, 5, 5));
+
+            var element = _wait.Until(wt => wt.FindElement(By.Id("Pizza")));
             var selectElement = new SelectElement(element);
             selectElement.SelectByText("Pizza50");
 
@@ -35,7 +37,7 @@ namespace XUnitTestA8
 
             _driver.FindElement(By.ClassName("btn")).Click();
 
-            _wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
+            
             _wait.Until(wt => wt.FindElement(By.Id("Success")).Text == "True");
 
             _driver.Close();
@@ -52,7 +54,7 @@ namespace XUnitTestA8
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
 
-            _wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
+            _wait = new WebDriverWait(_driver, new TimeSpan(0, 5, 5));
             _wait.Until(wt => wt.FindElement(By.TagName("h2")).Text == "All orders");
             _driver.Close();
             _driver.Dispose();
@@ -70,7 +72,9 @@ namespace XUnitTestA8
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
 
-            var element = _driver.FindElement(By.Id("Pizza"));
+            _wait = new WebDriverWait(_driver, new TimeSpan(0, 5, 5));
+
+            var element = _wait.Until(wt => wt.FindElement(By.Id("Pizza")));
             var selectElement = new SelectElement(element);
             selectElement.SelectByText("Pizza50");
 
@@ -83,9 +87,11 @@ namespace XUnitTestA8
             url = "https://localhost:44390/Pizza/GetAllOrders";
             _driver.Navigate().GoToUrl(url);
 
-            _driver.FindElement(By.XPath("/html/body/div/table/tbody/tr[1]/td[6]/a")).Click();// delete the first order.
+            _wait = new WebDriverWait(_driver, new TimeSpan(0, 5, 5));
 
-            _wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
+            var element2 = _wait.Until(wt => wt.FindElement(By.XPath("/html/body/div/table/tbody/tr[1]/td[6]/a")));// delete the first order.
+            element2.Click();
+
             _wait.Until(wt => wt.FindElement(By.TagName("h2")).Text == "All orders");
 
             _driver.Close();
