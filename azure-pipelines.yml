@@ -27,19 +27,9 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
+- script: dotnet test '**/XUnitTestA8/*.csproj' --logger trx
 - task: PublishTestResults@2
+  condition: succeededOrFailed()
   inputs:
-    testResultsFormat: 'xUnit'
-    testResultsFiles: '**/TEST-*.trx' 
-    #searchFolder: '$(System.DefaultWorkingDirectory)' # Optional
-    #mergeTestResults: false # Optional
-    #failTaskOnFailedTests: false # Optional
-    #testRunTitle: # Optional
-    #buildPlatform: # Optional
-    #buildConfiguration: # Optional
-    #publishRunAttachments: true # Optional
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
