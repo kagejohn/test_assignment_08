@@ -15,7 +15,7 @@ namespace XUnitTestA8
     public class SeleniumTests
     {
         private ChromeDriver _driver;
-        private WebDriverWait _wait;
+        private WebDriverWait _wait;// i tried with a wait time of upto 5 minutes and it still fails to find the elements on azure
 
         [Fact]
         public void EnterOrder()
@@ -27,9 +27,7 @@ namespace XUnitTestA8
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
 
-            _wait = new WebDriverWait(_driver, new TimeSpan(0, 5, 5));
-
-            var element = _wait.Until(wt => wt.FindElement(By.Id("Pizza")));
+            var element = _driver.FindElement(By.Id("Pizza"));
             var selectElement = new SelectElement(element);
             selectElement.SelectByText("Pizza50");
 
@@ -37,7 +35,7 @@ namespace XUnitTestA8
 
             _driver.FindElement(By.ClassName("btn")).Click();
 
-            
+            _wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
             _wait.Until(wt => wt.FindElement(By.Id("Success")).Text == "True");
 
             _driver.Close();
@@ -54,7 +52,7 @@ namespace XUnitTestA8
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
 
-            _wait = new WebDriverWait(_driver, new TimeSpan(0, 5, 5));
+            _wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
             _wait.Until(wt => wt.FindElement(By.TagName("h2")).Text == "All orders");
             _driver.Close();
             _driver.Dispose();
@@ -72,9 +70,7 @@ namespace XUnitTestA8
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
 
-            _wait = new WebDriverWait(_driver, new TimeSpan(0, 5, 5));
-
-            var element = _wait.Until(wt => wt.FindElement(By.Id("Pizza")));
+            var element = _driver.FindElement(By.Id("Pizza"));
             var selectElement = new SelectElement(element);
             selectElement.SelectByText("Pizza50");
 
@@ -87,11 +83,9 @@ namespace XUnitTestA8
             url = "https://localhost:44390/Pizza/GetAllOrders";
             _driver.Navigate().GoToUrl(url);
 
-            _wait = new WebDriverWait(_driver, new TimeSpan(0, 5, 5));
+            _driver.FindElement(By.XPath("/html/body/div/table/tbody/tr[1]/td[6]/a")).Click();// delete the first order.
 
-            var element2 = _wait.Until(wt => wt.FindElement(By.XPath("/html/body/div/table/tbody/tr[1]/td[6]/a")));// delete the first order.
-            element2.Click();
-
+            _wait = new WebDriverWait(_driver, new TimeSpan(0, 0, 5));
             _wait.Until(wt => wt.FindElement(By.TagName("h2")).Text == "All orders");
 
             _driver.Close();
